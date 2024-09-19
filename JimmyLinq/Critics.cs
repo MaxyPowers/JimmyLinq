@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace JimmyLinq
 {
+    /// <summary>
+    /// Название сервисов предоставляющих критику на комиксы
+    /// </summary>
     enum Critics
     {
         MuddyCritic,

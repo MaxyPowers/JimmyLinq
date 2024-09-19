@@ -1,14 +1,24 @@
 ﻿using JimmyLinq;
 
-namespace JoesComic
+/* 
+ * Класс комикс описывает объект комикс
+ * Необходим для сортировки и выборки комиксов по заданным параметрам
+ */
+
+namespace JoesComic //Комиксы Джо
 {
     class Comic
     {
-        public string Name { get; set; }
-        public int Issue { get; set; }
-
+        public string Name { get; set; } //Название комикса
+        public int Issue { get; set; } //Номер выпуска
+        /// <summary>
+        /// Возвращает строковое представление объекта Comic
+        /// </summary>
+        /// <returns></returns>
         public override string ToString() => $"{Name} (Issue #{Issue})";
-
+        /// <summary>
+        /// Заглушка. Список объектов комикс с названием и номером выпуска доступных для обработки
+        /// </summary>
         public static readonly IEnumerable<Comic> Catalog = new List<Comic>
         {
             new Comic {Name = "Johnny America vs. the Pinko", Issue = 6},
@@ -20,7 +30,9 @@ namespace JoesComic
             new Comic {Name = "Tribal Tattoo Madness", Issue = 83},
             new Comic {Name = "The Death of the Object", Issue = 97},
         };
-
+        /// <summary>
+        /// Заглушка. Список содержит ценны на каждый отдельный номер из коллекции
+        /// </summary>
         public static readonly IReadOnlyDictionary<int, decimal> Prices = new Dictionary<int, decimal>
         {
             {6, 3600M},
@@ -32,7 +44,9 @@ namespace JoesComic
             {83, 25.75M},
             {97, 35.25M},
         };
-
+        /// <summary>
+        /// Заглушка. Список с отзывами из разных источников на некоторые комиксы
+        /// </summary>
         public static readonly IEnumerable<Review> Reviews = new[] 
         {
             new Review() { Issue = 36, Critic = Critics.MuddyCritic, Score = 37.6 },
