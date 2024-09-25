@@ -11,7 +11,7 @@ namespace JimmyLinq
     /// <summary>
     /// Класс описывает один конкретный отзыв на один конкретный номер комикса
     /// </summary>
-    class Review
+    public class Review
     {
         public int Issue {  get; set; } //Номер комикса
         public Critics Critic { get; set; } //Ресуср откуда был выбран отзыв

@@ -7,7 +7,7 @@
 
 namespace JoesComic //Комиксы Джо
 {
-    class Comic
+    public class Comic
     {
         public string Name { get; set; } //Название комикса
         public int Issue { get; set; } //Номер выпуска

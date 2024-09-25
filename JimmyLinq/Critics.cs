@@ -9,7 +9,7 @@ namespace JimmyLinq
     /// <summary>
     /// Название сервисов предоставляющих критику на комиксы
     /// </summary>
-    enum Critics
+    public enum Critics
     {
         MuddyCritic,
         RottenTornadoes

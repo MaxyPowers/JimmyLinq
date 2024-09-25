@@ -9,7 +9,7 @@ namespace JimmyLinq
     /// <summary>
     /// Перечисление для груп комиксов
     /// </summary>
-    enum PriceRange
+    public enum PriceRange
     {
         Cheap,
         Expensive

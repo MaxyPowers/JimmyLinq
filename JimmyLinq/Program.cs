@@ -5,7 +5,7 @@ using JimmyLinq;
  * Выполнить сортировку или объединение, вывести результат на консоль
  */
 
-class Program
+public class Program
 {
     static void Main(string[] args)
     {

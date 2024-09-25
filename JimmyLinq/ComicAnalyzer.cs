@@ -13,19 +13,20 @@ using JoesComic;
 namespace JimmyLinq
 {
     /// <summary>
-    /// Статический класс (не требует создания объекта для использования методов)
+    /// Статический класс (не требует создания объекта для использования методов).
     /// Сортирует комиксы по цене и/или популярности 
     /// </summary>
-    internal static class ComicAnalyzer
+    public static class ComicAnalyzer
     {
         /// <summary>
         /// Обозначить комикс дешевым или дорогим в зависимости от стоимости входящего экземляра
         /// </summary>
         /// <param name="comic">Обьект Comic из статической коллеции в классе Comic</param>
+        /// <param name="prices">Словарь содержит цены комиксов, ключ - номер комикса</param>
         /// <returns>Возвращает значение перечеслиния ценовых диапазонов</returns>
-        private static PriceRange CalculatePriceRange (Comic comic)
+        private static PriceRange CalculatePriceRange (Comic comic, IReadOnlyDictionary<int, decimal> prices)
         {
-            if (Comic.Prices[comic.Issue] < 100M) //Если цена данного комикса меньше 100
+            if (prices[comic.Issue] < 100M) //Если цена данного комикса меньше 100
                 return PriceRange.Cheap;          //Комикс дешевый
             else
                 return PriceRange.Expensive;      //Комикс дорогой
@@ -42,8 +43,8 @@ namespace JimmyLinq
             //Обявить перечисление групп комиксов и выполнить запрос LINQ для группировки комиксов по ценовым диапазонам
             IEnumerable<IGrouping<PriceRange, Comic>> grouped =
                 from comic in comics                                        
-                orderby Comic.Prices[comic.Issue]                           //Отсортировать комиксы по цене от меньшей к большей
-                group comic by CalculatePriceRange(comic) into priceGroup   //Сгрупировать комиксы по ценовому диапазону вычисленному методом
+                orderby prices[comic.Issue]                           //Отсортировать комиксы по цене от меньшей к большей
+                group comic by CalculatePriceRange(comic, prices) into priceGroup   //Сгрупировать комиксы по ценовому диапазону вычисленному методом
                 select priceGroup;                                          //Вернуть группы комиксов
 
             return grouped;                                                 //Вернуть результат группировки
