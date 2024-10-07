@@ -41,13 +41,10 @@ namespace JimmyLinq
         public static IEnumerable<IGrouping<PriceRange,Comic>> GroupComicByPrice(IEnumerable<Comic> comics, IReadOnlyDictionary<int, decimal> prices)
         {
             //Обявить перечисление групп комиксов и выполнить запрос LINQ для группировки комиксов по ценовым диапазонам
-            IEnumerable<IGrouping<PriceRange, Comic>> grouped =
-                from comic in comics                                        
-                orderby prices[comic.Issue]                           //Отсортировать комиксы по цене от меньшей к большей
-                group comic by CalculatePriceRange(comic, prices) into priceGroup   //Сгрупировать комиксы по ценовому диапазону вычисленному методом
-                select priceGroup;                                          //Вернуть группы комиксов
-
-            return grouped;                                                 //Вернуть результат группировки
+            //Отсортировать комиксы по цене от меньшей к большей
+            //Сгрупировать комиксы по ценовому диапазону вычисленному методом
+            var grouped = comics.OrderBy(c => prices[c.Issue]).GroupBy(c => CalculatePriceRange(c, prices));
+            return grouped;//Вернуть результат группировки
         }
 
         /// <summary>
@@ -59,12 +56,13 @@ namespace JimmyLinq
         public static IEnumerable<string> GetReviews (IEnumerable<Comic> comics, IEnumerable<Review> reviews)
         {
             //Выполнить запрос LINQ, объеденить комискы с рецензиями по номеру выпуска
-            var joined =
-                from comic in comics
-                orderby comic.Issue                                                                 //Отсортировать комиксы по номеру выпуска
-                join review in reviews on comic.Issue equals review.Issue                           //Обеденить комиксы с отзывами по номеру выпуска
-                select $"{review.Critic} rated #{comic.Issue} '{comic.Name}' {review.Score:0.00}";  //Сформировать строку с информацией о критике,
-                                                                                                    //номером и названием комикса и его рейтингом
+            //Отсортировать комиксы по номеру выпуска
+            //Обеденить комиксы с отзывами по номеру выпуска
+            //Сформировать строку с информацией о критике, номером и названием комикса и его рейтингом
+            var joined = comics.OrderBy(comic => comic.Issue).Join(reviews,
+                comic => comic.Issue,
+                review => review.Issue,
+                (comic, review) => $"{review.Critic} rated #{comic.Issue} '{comic.Name}' {review.Score:0.00}");
             return joined;  //Вернуть результат объединения
         }
     }

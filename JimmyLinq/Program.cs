@@ -10,26 +10,18 @@ public class Program
     static void Main(string[] args)
     {
         //Булевая переменная для управления циклом
-        bool done = false;
+        var done = false;
         //Цикл будет выполняться до тек пор пока done - не истина
         while (!done)
         {
             //Пользователь долеж выпбрать хочет ли он получить отсортированные по цене комиксы или рейтинги критики на некоторые выпуски
             Console.WriteLine("\nPress G to group comics by price, R to get reviews, any other key to quit\n");
-
-            switch(Console.ReadKey(true).KeyChar.ToString().ToUpper())
+            done = Console.ReadKey(true).KeyChar.ToString().ToUpper() switch
             {
-                case "G": //Пользователь хочет получить группы отсортированных по цене комиксов
-                    done = GroupComicsByPrice();
-                    break;
-                case "R": // Пользователь хочет получить объедение комиксов и критики на них
-                    done = GetReviews();
-                    break;
-                default:  //Завершить выполнение программы
-                    done = true;
-                    break;
-
-            }
+                "G" => GroupComicsByPrice(),//Пользователь хочет получить группы отсортированных по цене комиксов
+                "R" => GetReviews(),        // Пользователь хочет получить объедение комиксов и критики на них
+                _ => true,                  //Завершить выполнение программы
+            };
         }
     }
 
